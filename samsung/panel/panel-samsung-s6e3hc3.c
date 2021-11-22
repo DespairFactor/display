@@ -97,6 +97,17 @@ struct s6e3hc3_mode_data {
 	const struct exynos_dsi_cmd_set *common_mode_cmd_set;
 
 	/**
+	 * @idle_mode_cmd_set:
+	 *
+	 * When driver is allowed to change modes while idle, this function will be called when
+	 * display is going into self refresh (i.e. going idle) to go into lowest possible mode.
+	 *
+	 * This function is expected to be defined if auto mode cmd set is not defined, otherwise
+	 * this is optional.
+	 */
+	const struct exynos_dsi_cmd_set *idle_mode_cmd_set;
+
+	/**
 	 * @wakeup_mode_cmd_set:
 	 *
 	 * When driver is allowed to change modes while idle, this function will be called when
@@ -320,6 +331,7 @@ static const struct s6e3hc3_mode_data s6e3hc3_mode_60 = {
 	.common_mode_cmd_set = &s6e3hc3_mode_60_common_cmd_set,
 	.wakeup_mode_cmd_set = &s6e3hc3_mode_60_wakeup_cmd_set,
 	.idle_vrefresh = 10,
+	.idle_mode_cmd_set = &s6e3hc3_mode_idle_10hz_cmd_set,
 };
 
 static u8 s6e3hc3_get_te2_option(struct exynos_panel *ctx)
