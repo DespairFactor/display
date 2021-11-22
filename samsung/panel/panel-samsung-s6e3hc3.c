@@ -319,7 +319,7 @@ static DEFINE_EXYNOS_CMD_SET(s6e3hc3_mode_60_wakeup);
 static const struct s6e3hc3_mode_data s6e3hc3_mode_60 = {
 	.common_mode_cmd_set = &s6e3hc3_mode_60_common_cmd_set,
 	.wakeup_mode_cmd_set = &s6e3hc3_mode_60_wakeup_cmd_set,
-	.idle_vrefresh = 0, /* disable idle mode */
+	.idle_vrefresh = 10,
 };
 
 static u8 s6e3hc3_get_te2_option(struct exynos_panel *ctx)
@@ -487,8 +487,7 @@ static bool s6e3hc3_set_self_refresh(struct exynos_panel *ctx, bool enable)
 		 * idle is being disabled and we have early exit enabled. Make a frequency update
 		 * in order to disable early exit
 		 */
-		if (mdata->auto_mode_cmd_set &&
-			(spanel->early_exit_enabled != is_auto_mode_preferred(ctx))) {
+		if (spanel->early_exit_enabled != is_auto_mode_preferred(ctx)) {
 			dev_dbg(ctx->dev, "early exit mode change detected for mode: %s\n",
 				pmode->mode.name);
 			s6e3hc3_change_frequency(ctx, pmode);
